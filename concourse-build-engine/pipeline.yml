@@ -1,0 +1,49 @@
+jobs:
+- name: build
+  public: true
+  plan:
+  - get: tollgate
+    trigger: true
+  - task: build
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: 
+          repository: praqma/gh-pages
+          tag: '1.21'
+      inputs: 
+        - name: tollgate
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+           jekyll build --source tollgate --destination . > results.txt
+           git config --global user.email "nobody@special.praqma"
+           git config --global user.name "praqma" 
+           git add tollgate
+           git commit -m "my git commit message"
+           cat results.txt
+  - put: tollgate
+    params: 
+      repository: tollgate
+
+
+resources:
+- name: tollgate
+  type: praqma-tollgate
+  source:
+    prefixready: ready/
+    prefixwip: wip/
+    master: master
+    url: https://github.com/Sharor/git-training-with-pipeline.git
+    username: {{github-username}}
+    password: {{github-password}}
+
+resource_types:
+- name: praqma-tollgate
+  type: docker-image
+  source:
+    repository: groenborg/concourse-git-phlow
+    tag: '1.0.0'
