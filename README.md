@@ -1,6 +1,7 @@
 # git-training-with-pipeline
 | tollgate |
 | ------------- |
+![integration status](https://concourse.bosh.praqma.cloud/api/v1/pipelines/git-training-pipeline/jobs/build/badge) |
 ![integration status](https://concourse.bosh.praqma.cloud/api/v1/teams/main/pipelines/git-training-pipeline/jobs/build/badge) |
 
 Welcome to git training, with a real repository. 
