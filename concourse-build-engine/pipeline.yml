@@ -19,12 +19,14 @@ jobs:
         args:
         - -exc
         - |
-           jekyll build --source tollgate --destination . > results.txt
+           ls
+           jekyll build --source ./tollgate > results.txt
            git config --global user.email "nobody@special.praqma"
            git config --global user.name "praqma" 
            git add tollgate
            git commit -m "my git commit message"
            cat results.txt
+           ls tollgate
   - put: tollgate
     params: 
       repository: tollgate
